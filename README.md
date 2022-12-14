@@ -24,6 +24,6 @@
 
 ## Inserção
 
-# Deleção
+## Deleção
 
-# Busca
+## Busca
