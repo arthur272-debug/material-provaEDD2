@@ -105,6 +105,75 @@ public void verificarBalanceamento(No no_atual) {
 ## Indução com Rotação Simples e Dupla
 
 ```python
+   public No FazerRotacaoEsquerda(No variavel_no) {
+
+        No direita = variavel_no.getDireita();
+        direita.setPai(variavel_no.getPai());
+
+        variavel_no.setDireita(direita.getEsquerda());
+
+        if (variavel_no.getDireita() != null) {
+            variavel_no.getDireita().setPai(variavel_no);
+        }
+
+        direita.setEsquerda(variavel_no);
+        variavel_no.setPai(direita);
+
+        if (direita.getPai() != null) {
+
+            if (direita.getPai().getDireita() == variavel_no) {
+                direita.getPai().setDireita(direita);
+
+            } else if (direita.getPai().getEsquerda() == variavel_no) {
+                direita.getPai().setEsquerda(direita);
+            }
+        }
+
+        setBalanceamento(variavel_no);
+        setBalanceamento(direita);
+
+        return direita;
+    }
+
+    public No rotacaoDireita(No variavel_no) {
+
+        No esquerda = variavel_no.getEsquerda();
+        esquerda.setPai(variavel_no.getPai());
+
+        variavel_no.setEsquerda(esquerda.getDireita());
+
+        if (variavel_no.getEsquerda() != null) {
+            variavel_no.getEsquerda().setPai(variavel_no);
+        }
+
+        esquerda.setDireita(variavel_no);
+        variavel_no.setPai(esquerda);
+
+        if (esquerda.getPai() != null) {
+
+            if (esquerda.getPai().getDireita() == variavel_no) {
+                esquerda.getPai().setDireita(esquerda);
+
+            } else if (esquerda.getPai().getEsquerda() == variavel_no) {
+                esquerda.getPai().setEsquerda(esquerda);
+            }
+        }
+
+        setBalanceamento(variavel_no);
+        setBalanceamento(esquerda);
+
+        return esquerda;
+    }
+
+    public No duplaRotacaoEsquerdaDireita(No variavel_no) {
+        variavel_no.setEsquerda(FazerRotacaoEsquerda(variavel_no.getEsquerda()));
+        return rotacaoDireita(variavel_no);
+    }
+
+    public No duplaRotacaoDireitaEsquerda(No variavel_no) {
+        variavel_no.setDireita(rotacaoDireita(variavel_no.getDireita()));
+        return FazerRotacaoEsquerda(variavel_no);
+    }
 
 ```
 
