@@ -111,7 +111,68 @@ public void verificarBalanceamento(No no_atual) {
 ## Remoção
 
 ```python
+public void removerNo(int k) {
+        removerNo(this.raiz, k);
+    }
 
+    public void removerNo(No no_atual, int variavel_no) {
+        if (no_atual == null) {
+            return;
+
+        } else {
+
+            if (no_atual.getChave() > variavel_no) {
+                removerNo(no_atual.getEsquerda(), variavel_no);
+
+            } else if (no_atual.getChave() < variavel_no) {
+                removerNo(no_atual.getDireita(), variavel_no);
+
+            } else if (no_atual.getChave() == variavel_no) {
+                removerNoEncontrado(no_atual);
+            }
+        }
+    }
+
+    public void removerNoEncontrado(No variavel_no) {
+        No r;
+
+        if (variavel_no.getEsquerda() == null || variavel_no.getDireita() == null) {
+
+            if (variavel_no.getPai() == null) {
+                this.raiz = null;
+                variavel_no = null;
+                return;
+            }
+            r = variavel_no;
+
+        } else {
+            r = sucessor(variavel_no);
+            variavel_no.setChave(r.getChave());
+        }
+
+        No p;
+        if (r.getEsquerda() != null) {
+            p = r.getEsquerda();
+        } else {
+            p = r.getDireita();
+        }
+
+        if (p != null) {
+            p.setPai(r.getPai());
+        }
+
+        if (r.getPai() == null) {
+            this.raiz = p;
+        } else {
+            if (r == r.getPai().getEsquerda()) {
+                r.getPai().setEsquerda(p);
+            } else {
+                r.getPai().setDireita(p);
+            }
+            verificarBalanceamento(r.getPai());
+        }
+        r = null;
+    }
 ```
 
 # Árvore Rubro-Negra
