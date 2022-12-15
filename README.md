@@ -70,9 +70,49 @@ public void delete(Integer chave) {
 
 ## Balanceamento
 
+```python
+public void verificarBalanceamento(No no_atual) {
+        setBalanceamento(no_atual);
+        int balanceamento = no_atual.getBalanceamento();
+
+        if (balanceamento == -2) {
+
+            if (calcularAltura(no_atual.getEsquerda().getEsquerda()) >= calcularAltura(no_atual.getEsquerda().getDireita())) {
+                no_atual = rotacaoDireita(no_atual);
+
+            } else {
+                no_atual = duplaRotacaoEsquerdaDireita(no_atual);
+            }
+
+        } else if (balanceamento == 2) {
+
+            if (calcularAltura(no_atual.getDireita().getDireita()) >= calcularAltura(no_atual.getDireita().getEsquerda())) {
+                no_atual = FazerRotacaoEsquerda(no_atual);
+
+            } else {
+                no_atual = duplaRotacaoDireitaEsquerda(no_atual);
+            }
+        }
+
+        if (no_atual.getPai() != null) {
+            verificarBalanceamento(no_atual.getPai());
+        } else {
+            this.raiz = no_atual;
+        }
+    }
+```
+
 ## Indução com Rotação Simples e Dupla
 
+```python
+
+```
+
 ## Remoção
+
+```python
+
+```
 
 # Árvore Rubro-Negra
 
