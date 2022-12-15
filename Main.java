@@ -2,7 +2,7 @@ public class Main {
     public static void main(String[] args) {
 
         ArvoreBinariaBusca<Integer> arvoreBinaria = new ArvoreBinariaBusca<>();
-
+         // Main da árvore binária de busca
         //int [] vetor = {1,2,3,4,5};
 
        // arvoreBinaria.constroiArvore(vetor);
