@@ -3,25 +3,27 @@
 ## Inserção
 
 ```python
-def findMissing(arr, N):
-   
-    temp = [0] * (N+1)
- 
-    for i in range(0, N):
-        temp[arr[i] - 1] = 1
- 
-    for i in range(0, N+1):
-        if(temp[i] == 0):
-            ans = i + 1
- 
-    print(ans)
- 
-if __name__ == '__main__':
-    arr = [1, 2, 3, 5]
-    N = len(arr)
- 
-    # Function call
-    findMissing(arr, N)
+ public void inserirValor(Integer chave) {
+            if (chave == null)
+                throw new IllegalArgumentException("A chave fornecida é null!");
+
+            raiz = inserirValor(raiz, chave);
+        }
+
+        private No inserirValor(No variavel_no, Integer chave) {
+            /* Caso base: encontrou a posição de inserção. */
+            if (variavel_no == null)
+                return new No(chave);
+
+            int comparacao = chave.compareTo(variavel_no.chave);
+
+            if (comparacao < 0) /* Deve-se ir para a esquerda. */
+                variavel_no.esquerda = inserirValor(variavel_no.esquerda, chave);
+            else if (comparacao > 0) /* Deve-se ir para a direita. */
+                variavel_no.direita = inserirValor(variavel_no.direita, chave);
+
+            return variavel_no;
+        }
 ```
 
 ## Remoção
