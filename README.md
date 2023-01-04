@@ -2,7 +2,7 @@
 
 ## Inserção
 
-```python
+```java
  public void inserirValor(Integer chave) {
         if (chave == null)
             throw new IllegalArgumentException("A chave fornecida é null!");
@@ -28,7 +28,7 @@
 
 ## Remoção
 
-```python
+```java
 public void delete(Integer chave) {
         raiz = delete(raiz, chave);
     }
@@ -70,7 +70,7 @@ public void delete(Integer chave) {
 
 ## Balanceamento
 
-```python
+```java
 public void verificarBalanceamento(No no_atual) {
         setBalanceamento(no_atual);
         int balanceamento = no_atual.getBalanceamento();
@@ -104,7 +104,7 @@ public void verificarBalanceamento(No no_atual) {
 
 ## Indução com Rotação Simples e Dupla
 
-```python
+```java
    public No FazerRotacaoEsquerda(No variavel_no) {
 
         No direita = variavel_no.getDireita();
@@ -179,7 +179,7 @@ public void verificarBalanceamento(No no_atual) {
 
 ## Remoção
 
-```python
+```java
 public void removerNo(int k) {
         removerNo(this.raiz, k);
     }
@@ -247,6 +247,27 @@ public void removerNo(int k) {
 # Árvore Rubro-Negra
 
 ## Inserção
+
+```java
+private Node put(Node h, Key key, Value val) {
+      if (h == null) 
+         return new Node(key, val, 1, RED);
+
+      int cmp = key.compareTo(h.key);
+      if      (cmp < 0) h.left  = put(h.left, key, val);
+      else if (cmp > 0) h.right = put(h.right, key, val);
+      else              h.val   = val;
+
+      if (isRed(h.right) && !isRed(h.left))      
+        h = rotateLeft(h);
+      if (isRed(h.left)  &&  isRed(h.left.left)) 
+        h = rotateRight(h);
+      if (isRed(h.left)  &&  isRed(h.right))     
+        flipColors(h);
+      h.N = size(h.left) + size(h.right) + 1;
+      return h;
+   }
+```
 
 ##  Deleção
 
