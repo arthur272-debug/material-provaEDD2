@@ -271,12 +271,71 @@ private Node put(Node h, Key key, Value val) {
 
 ##  Deleção
 
+```java
+
+```
+
 ## Busca
+
+```java
+
+```
 
 # Árovre 2-3
 
 ## Inserção
 
+```java
+
+```
+
 ## Deleção
 
+```java
+
+```
+
 ## Busca
+
+```java
+
+```
+
+# Árvore B
+
+## Inserção
+
+```java
+
+```
+
+## Deleção
+
+```java
+
+```
+## Busca
+
+```java
+
+```
+
+# Árvore 2-3
+
+## Inserção
+
+```java
+
+```
+
+## Deleção
+
+```java
+
+```
+
+## Busca
+
+```java
+
+```
