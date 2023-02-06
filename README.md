@@ -281,26 +281,6 @@ private Node put(Node h, Key key, Value val) {
 
 ```
 
-# Árovre 2-3
-
-## Inserção
-
-```java
-
-```
-
-## Deleção
-
-```java
-
-```
-
-## Busca
-
-```java
-
-```
-
 # Árvore B
 
 ## Inserção
@@ -314,26 +294,6 @@ private Node put(Node h, Key key, Value val) {
 ```java
 
 ```
-## Busca
-
-```java
-
-```
-
-# Árvore 2-3
-
-## Inserção
-
-```java
-
-```
-
-## Deleção
-
-```java
-
-```
-
 ## Busca
 
 ```java
