@@ -158,6 +158,93 @@ Nesta função, o percorrimento em pós-ordem é realizado usando a recursão. A
 
 # Árvore AVL
 
+## Inserção
+
+```python
+
+class Node:
+    def __init__(self, key, left=None, right=None, height=0):
+        self.key = key
+        self.left = left
+        self.right = right
+        self.height = height
+
+class AVLTree:
+    def __init__(self):
+        self.root = None
+
+    def height(self, node):
+        if node is None:
+            return -1
+        return node.height
+
+    def update_height(self, node):
+        node.height = max(self.height(node.left), self.height(node.right)) + 1
+
+    def left_rotate(self, node):
+        new_root = node.right
+        node.right = new_root.left
+        new_root.left = node
+
+        self.update_height(node)
+        self.update_height(new_root)
+        return new_root
+
+    def right_rotate(self, node):
+        new_root = node.left
+        node.left = new_root.right
+        new_root.right = node
+
+        self.update_height(node)
+        self.update_height(new_root)
+        return new_root
+
+    def balance_factor(self, node):
+        return self.height(node.left) - self.height(node.right)
+
+    def insert(self, key):
+        self.root = self._insert(key, self.root)
+
+    def _insert(self, key, node):
+        if node is None:
+            return Node(key)
+
+        if key < node.key:
+            node.left = self._insert(key, node.left)
+        else:
+            node.right = self._insert(key, node.right)
+
+        node = self.rebalance(node)
+        self.update_height(node)
+        return node
+
+    def rebalance(self, node):
+        bf = self.balance_factor(node)
+
+        if bf > 1:
+            if self.balance_factor(node.left) < 0:
+                node.left = self.left_rotate(node.left)
+            node = self.right_rotate(node)
+        elif bf < -1:
+            if self.balance_factor(node.right) > 0:
+                node.right = self.right_rotate(node.right)
+            node = self.left_rotate(node)
+        return node
+
+```
+A classe "Node" representa cada nó da árvore e tem 4 atributos: "key", "left", "right" e "height". O "key" é a chave do nó, "left" e "right" são referências para os filhos esquerdo e direito respectivamente, e "height" é a altura do nó.
+
+A classe "AVLTree" representa a árvore AVL. Ela tem o atributo "root" que é a raiz da árvore. Ela implementa as seguintes funções:
+
+-> "height": retorna a altura do nó. Se o nó é None, retorna -1.
+-> "update_height": atualiza a altura do nó.
+-> "left_rotate": realiza uma rotação para a esquerda.
+-> "right_rotate": realiza uma rotação para a direita.
+-> "balance_factor": retorna o fator de balanceamento do nó.
+-> "insert": insere uma chave na árvore.
+-> "_insert": ajuda a inserir uma chave na árvore.
+-> "rebalance": rebalanceia a árvore se necessário.
+
 ## Balanceamento
 
 ```python
