@@ -160,36 +160,94 @@ Nesta função, o percorrimento em pós-ordem é realizado usando a recursão. A
 
 ## Balanceamento
 
-```java
-public void verificarBalanceamento(No no_atual) {
-        setBalanceamento(no_atual);
-        int balanceamento = no_atual.getBalanceamento();
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+        self.height = 1
 
-        if (balanceamento == -2) {
+class AVL:
+    def insert(self, root, key):
+        if not root:
+            return Node(key)
+        elif key < root.data:
+            root.left = self.insert(root.left, key)
+        else:
+            root.right = self.insert(root.right, key)
+ 
+        root.height = 1 + max(self.get_height(root.left),
+                              self.get_height(root.right))
+ 
+        balance = self.get_balance(root)
+ 
+        # Left Left Case
+        if balance > 1 and key < root.left.data:
+            return self.right_rotate(root)
+ 
+        # Right Right Case
+        if balance < -1 and key > root.right.data:
+            return self.left_rotate(root)
+ 
+        # Left Right Case
+        if balance > 1 and key > root.left.data:
+            root.left = self.left_rotate(root.left)
+            return self.right_rotate(root)
+ 
+        # Right Left Case
+        if balance < -1 and key < root.right.data:
+            root.right = self.right_rotate(root.right)
+            return self.left_rotate(root)
+ 
+        return root
+ 
+    def get_height(self, root):
+        if not root:
+            return 0
+ 
+        return root.height
+ 
+    def get_balance(self, root):
+        if not root:
+            return 0
+ 
+        return self.get_height(root.left) - self.get_height(root.right)
+ 
+    def left_rotate(self, z):
+        y = z.right
+        T2 = y.left
+ 
+        # Perform rotation
+        y.left = z
+        z.right = T2
+ 
+        # Update heights
+        z.height = 1 + max(self.get_height(z.left),
+                           self.get_height(z.right))
+        y.height = 1 + max(self.get_height(y.left),
+                           self.get_height(y.right))
+ 
+        # Return the new root
+        return y
+ 
+    def right_rotate(self, z):
+        y = z.left
+        T3 = y.right
+ 
+        # Perform rotation
+        y.right = z
+        z.left = T3
+ 
+        # Update heights
+        z.height = 1 + max(self.get_height(z.left),
+                           self.get_height(z.right))
+        y.height = 1 + max(self.get_height(y.left),
+                           self.get_height(y.right))
+ 
+        # Return the new root
+        return y
 
-            if (calcularAltura(no_atual.getEsquerda().getEsquerda()) >= calcularAltura(no_atual.getEsquerda().getDireita())) {
-                no_atual = rotacaoDireita(no_atual);
-
-            } else {
-                no_atual = duplaRotacaoEsquerdaDireita(no_atual);
-            }
-
-        } else if (balanceamento == 2) {
-
-            if (calcularAltura(no_atual.getDireita().getDireita()) >= calcularAltura(no_atual.getDireita().getEsquerda())) {
-                no_atual = FazerRotacaoEsquerda(no_atual);
-
-            } else {
-                no_atual = duplaRotacaoDireitaEsquerda(no_atual);
-            }
-        }
-
-        if (no_atual.getPai() != null) {
-            verificarBalanceamento(no_atual.getPai());
-        } else {
-            this.raiz = no_atual;
-        }
-    }
 ```
 
 ## Indução com Rotação Simples e Dupla
