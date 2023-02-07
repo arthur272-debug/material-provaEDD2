@@ -1,0 +1,12 @@
+# define D 5 //árvore de ordem 5
+
+typedef struct BTPage{
+ //armazena numero de chaves na pagina
+ short int totalChaves;
+
+ //vetor de chaves
+ int chaves[D-1];
+
+ //Ponteiros das paginas filhas, -1 aponta para NULL
+ struct BTPage filha[D];
+}Page;
