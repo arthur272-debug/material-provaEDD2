@@ -520,8 +520,37 @@ Após a remoção do nó, a função "delete_fixup" é chamada para restaurar as
 ## Busca
 
 ```python
+class Node:
+    def __init__(self, key, color, left=None, right=None, parent=None):
+        self.key = key
+        self.color = color
+        self.left = left
+        self.right = right
+        self.parent = parent
+
+class RedBlackTree:
+    def __init__(self, root=None):
+        self.root = root
+
+    def search(self, x, k):
+        if x is None or k == x.key:
+            return x
+        if k < x.key:
+            return self.search(x.left, k)
+        else:
+            return self.search(x.right, k)
 
 ```
+Para usar o método de busca, você precisa chamá-lo a partir da raiz da árvore passando o valor que deseja buscar:
+
+```python
+tree = RedBlackTree()
+node = tree.search(tree.root, key)
+
+```
+Se o nó for encontrado, ele será retornado e pode ser usado posteriormente. Caso contrário, será retornado None.
+
+Assim, este código é para buscar um nó com chave "k" na árvore rubro negra. Ele começa com uma verificação para saber se a árvore está vazia ou se a chave do nó atual é igual a "k". Se for verdadeiro, ele retorna o nó atual. Caso contrário, ele verifica se "k" é menor que a chave do nó atual. Se for verdadeiro, ele busca na subárvore esquerda; caso contrário, na subárvore direita. A busca continua até acharmos o nó desejado ou chegarmos a uma folha (nó nulo).
 
 # Árvore B
 
