@@ -2,29 +2,38 @@
 
 ## Inserção
 
-```java
- public void inserirValor(Integer chave) {
-        if (chave == null)
-            throw new IllegalArgumentException("A chave fornecida é null!");
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
 
-        raiz = inserirValor(raiz, chave);
-    }
-
-    private No inserirValor(No variavel_no, Integer chave) {
-        /* Caso base: encontrou a posição de inserção. */
-        if (variavel_no == null)
-            return new No(chave);
-
-        int comparacao = chave.compareTo(variavel_no.chave);
-
-        if (comparacao < 0) /* Deve-se ir para a esquerda. */
-            variavel_no.esquerda = inserirValor(variavel_no.esquerda, chave);
-        else if (comparacao > 0) /* Deve-se ir para a direita. */
-            variavel_no.direita = inserirValor(variavel_no.direita, chave);
-
-        return variavel_no;
-    }
+class BST:
+    def __init__(self):
+        self.root = None
+        
+    def insert(self, data):
+        if not self.root:
+            self.root = Node(data)
+        else:
+            current = self.root
+            while True:
+                if data < current.data:
+                    if not current.left:
+                        current.left = Node(data)
+                        break
+                    else:
+                        current = current.left
+                else:
+                    if not current.right:
+                        current.right = Node(data)
+                        break
+                    else:
+                        current = current.right
 ```
+
+Neste código, a função insert adiciona um novo nó à árvore. Se a raiz da árvore estiver vazia, o novo nó será definido como raiz. Se não, o novo nó será adicionado a esquerda ou à direita da raiz, dependendo se o seu valor for menor ou maior que o valor da raiz.
 
 ## Remoção
 
