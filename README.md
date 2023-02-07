@@ -344,6 +344,10 @@ class AVL:
 
 ```
 
+O método insert é usado para inserir um novo nó na árvore, e é implementado de forma recursiva. Ele verifica se o nó raiz é nulo, e se for, retorna um novo nó com o valor desejado. Se não for, ele verifica se o valor desejado é menor que o valor da raiz, e se for, insere-o à esquerda. Caso contrário, insere-o à direita. Após a inserção, o método verifica se a árvore está desbalanceada, e se estiver, aplica rotações para mantê-la balanceada.
+
+Os métodos get_height, get_balance e left_rotate e right_rotate são usados para ajudar na manutenção do balanceamento da árvore. O método get_height retorna a altura de um nó, ou zero se ele for nulo. O método get_balance retorna o fator de balanceamento de um nó, calculado como a diferença entre a altura dos filhos à esquerda e à direita. Os métodos left_rotate e right_rotate são usados para rotacionar a árvore à esquerda ou à direita, respectivamente, para mantê-la balanceada.
+
 ## Indução com Rotação Simples e Dupla
 
 ```java
