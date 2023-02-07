@@ -463,6 +463,53 @@ class RedBlackTree:
             y.color = z.color
         if z.color == "BLACK":
             self.delete_fixup(z.parent)
+            
+    def delete_fixup(self, node):
+    while node != self.root and node.color == BLACK:
+        if node == node.parent.left:
+            sibling = node.parent.right
+            if sibling.color == RED:
+                sibling.color = BLACK
+                node.parent.color = RED
+                self.left_rotate(node.parent)
+                sibling = node.parent.right
+            if sibling.left.color == BLACK and sibling.right.color == BLACK:
+                sibling.color = RED
+                node = node.parent
+            else:
+                if sibling.right.color == BLACK:
+                    sibling.left.color = BLACK
+                    sibling.color = RED
+                    self.right_rotate(sibling)
+                    sibling = node.parent.right
+                sibling.color = node.parent.color
+                node.parent.color = BLACK
+                sibling.right.color = BLACK
+                self.left_rotate(node.parent)
+                node = self.root
+        else:
+            sibling = node.parent.left
+            if sibling.color == RED:
+                sibling.color = BLACK
+                node.parent.color = RED
+                self.right_rotate(node.parent)
+                sibling = node.parent.left
+            if sibling.right.color == BLACK and sibling.left.color == BLACK:
+                sibling.color = RED
+                node = node.parent
+            else:
+                if sibling.left.color == BLACK:
+                    sibling.right.color = BLACK
+                    sibling.color = RED
+                    self.left_rotate(sibling)
+                    sibling = node.parent.left
+                sibling.color = node.parent.color
+                node.parent.color = BLACK
+                sibling.left.color = BLACK
+                self.right_rotate(node.parent)
+                node = self.root
+    node.color = BLACK
+
 ```
 
 ## Busca
