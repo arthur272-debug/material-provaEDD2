@@ -417,10 +417,52 @@ private Node put(Node h, Key key, Value val) {
    }
 ```
 
-##  Deleção
+##  Remoção
 
-```java
+```python
+class Node:
+    def __init__(self, key, color, left=None, right=None, parent=None):
+        self.key = key
+        self.color = color
+        self.left = left
+        self.right = right
+        self.parent = parent
+        
+class RedBlackTree:
+    def __init__(self, root=None):
+        self.root = root
+    
+    def transplant(self, u, v):
+        if u.parent is None:
+            self.root = v
+        elif u == u.parent.left:
+            u.parent.left = v
+        else:
+            u.parent.right = v
+        v.parent = u.parent
 
+    def minimum(self, x):
+        while x.left:
+            x = x.left
+        return x
+    
+    def delete(self, z):
+        if z.left is None:
+            self.transplant(z, z.right)
+        elif z.right is None:
+            self.transplant(z, z.left)
+        else:
+            y = self.minimum(z.right)
+            if y.parent != z:
+                self.transplant(y, y.right)
+                y.right = z.right
+                y.right.parent = y
+            self.transplant(z, y)
+            y.left = z.left
+            y.left.parent = y
+            y.color = z.color
+        if z.color == "BLACK":
+            self.delete_fixup(z.parent)
 ```
 
 ## Busca
