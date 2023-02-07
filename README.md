@@ -81,6 +81,25 @@ Nesta função, a remoção é realizada começando pela raiz. Primeiro, o nó a
 2. Se o nó tiver um filho à direita, o sucessor do nó (o nó mais à esquerda na subárvore à direita) é encontrado e usado para substituir o nó removido.
 3. Se o nó tiver dois filhos, o sucessor do nó é encontrado e usado para substituir o nó removido, e o sucessor original é removido.
 
+## Busca
+
+```python
+class BST:
+    # ...
+    def search(self, data):
+        current = self.root
+        while current:
+            if data == current.data:
+                return True
+            elif data < current.data:
+                current = current.left
+            else:
+                current = current.right
+        return False
+
+```
+Nesta função, a busca é realizada começando pela raiz. Se o valor for igual ao valor da raiz, a busca é bem-sucedida. Se for menor, a busca é continuada na subárvore à esquerda. Se for maior, a busca é continuada na subárvore à direita. A busca termina se o nó atual for nulo, o que indica que o valor não foi encontrado na árvore.
+
 # Árvore AVL
 
 ## Balanceamento
