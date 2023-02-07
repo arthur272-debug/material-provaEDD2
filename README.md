@@ -237,12 +237,19 @@ A classe "Node" representa cada nó da árvore e tem 4 atributos: "key", "left",
 A classe "AVLTree" representa a árvore AVL. Ela tem o atributo "root" que é a raiz da árvore. Ela implementa as seguintes funções:
 
 -> "height": retorna a altura do nó. Se o nó é None, retorna -1.
+
 -> "update_height": atualiza a altura do nó.
+
 -> "left_rotate": realiza uma rotação para a esquerda.
+
 -> "right_rotate": realiza uma rotação para a direita.
+
 -> "balance_factor": retorna o fator de balanceamento do nó.
+
 -> "insert": insere uma chave na árvore.
+
 -> "_insert": ajuda a inserir uma chave na árvore.
+
 -> "rebalance": rebalanceia a árvore se necessário.
 
 ## Balanceamento
