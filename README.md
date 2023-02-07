@@ -464,6 +464,22 @@ A função atualiza a altura da raiz após a remoção, e verifica se a árvore 
 
 A função get_min_node encontra o nó com a menor chave na subárvore cuja raiz é dada. A função é utilizada para encontrar o nó que vai substituir a raiz removida.
 
+## Busca
+
+```python
+class AVL:
+    def search(self, root, key):
+        if root is None or root.data == key:
+            return root
+        elif root.data < key:
+            return self.search(root.right, key)
+        else:
+            return self.search(root.left, key)
+
+```
+
+A função search procura pelo nó com a chave dada na árvore AVL. A busca começa na raiz da árvore e verifica se a raiz atual é nula ou se a chave da raiz é igual a chave desejada. Se for igual, a função retorna a raiz atual. Se a chave da raiz for menor que a chave desejada, a busca continua na subárvore da direita. Se a chave da raiz for maior que a chave desejada, a busca continua na subárvore da esquerda. A busca é recursiva e continua até encontrar o nó com a chave desejada ou até chegar a uma folha (nó nulo), o que significa que a chave não existe na árvore.
+
 # Árvore Rubro-Negra
 
 ## Inserção
