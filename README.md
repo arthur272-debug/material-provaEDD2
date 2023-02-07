@@ -378,74 +378,91 @@ Em uma rotação simples à esquerda, o nó desequilibrado é colocado como filh
 ```
 Em uma rotação simples à direita, o nó desequilibrado é colocado como filho esquerdo de seu filho direito.
 
+## Indução com Rotação Dupla
+
+### Rotação Dupla à Esquerda
+
+```python
+   def left_right_rotate(self, node):
+    node.left = self.left_rotate(node.left)
+    return self.right_rotate(node)
+
+```
+A Rotação Dupla à Esquerda (Left-Right Rotation) é realizada quando a subárvore à esquerda é muito pesada e a subárvore direita desta subárvore à esquerda também é pesada. Primeiro, a subárvore à esquerda é rotacionada para a esquerda, depois a subárvore raiz é rotacionada para a direita.
+
+### Rotação Dupla à Direita
+
+```python
+   def right_left_rotate(self, node):
+    node.right = self.right_rotate(node.right)
+    return self.left_rotate(node)
+
+```
+Rotação Dupla à Direita (Right-Left Rotation) é realizada quando a subárvore à direita é muito pesada e a subárvore esquerda desta subárvore à direita também é pesada. Primeiro, a subárvore à direita é rotacionada para a direita, depois a subárvore raiz é rotacionada para a esquerda.
 
 
 ## Remoção
 
-```java
-public void removerNo(int k) {
-        removerNo(this.raiz, k);
-    }
+```python
+class AVL:
+    def delete(self, root, key):
+        if not root:
+            return root
+        
+        if key < root.data:
+            root.left = self.delete(root.left, key)
+        elif key > root.data:
+            root.right = self.delete(root.right, key)
+        else:
+            if root.left is None:
+                return root.right
+            elif root.right is None:
+                return root.left
+            
+            min_larger_node = self.get_min_node(root.right)
+            root.data = min_larger_node.data
+            root.right = self.delete(root.right, min_larger_node.data)
+        
+        root.height = 1 + max(self.get_height(root.left), self.get_height(root.right))
+        balance = self.get_balance(root)
+        
+        # Left Left
+        if balance > 1 and self.get_balance(root.left) >= 0:
+            return self.right_rotate(root)
+        
+        # Left Right
+        if balance > 1 and self.get_balance(root.left) < 0:
+            root.left = self.left_rotate(root.left)
+            return self.right_rotate(root)
+        
+        # Right Right
+        if balance < -1 and self.get_balance(root.right) <= 0:
+            return self.left_rotate(root)
+        
+        # Right Left
+        if balance < -1 and self.get_balance(root.right) > 0:
+            root.right = self.right_rotate(root.right)
+            return self.left_rotate(root)
+        
+        return root
+    
+    def get_min_node(self, root):
+        if root is None or root.left is None:
+            return root
+        return self.get_min_node(root.left)
 
-    public void removerNo(No no_atual, int variavel_no) {
-        if (no_atual == null) {
-            return;
-
-        } else {
-
-            if (no_atual.getChave() > variavel_no) {
-                removerNo(no_atual.getEsquerda(), variavel_no);
-
-            } else if (no_atual.getChave() < variavel_no) {
-                removerNo(no_atual.getDireita(), variavel_no);
-
-            } else if (no_atual.getChave() == variavel_no) {
-                removerNoEncontrado(no_atual);
-            }
-        }
-    }
-
-    public void removerNoEncontrado(No variavel_no) {
-        No r;
-
-        if (variavel_no.getEsquerda() == null || variavel_no.getDireita() == null) {
-
-            if (variavel_no.getPai() == null) {
-                this.raiz = null;
-                variavel_no = null;
-                return;
-            }
-            r = variavel_no;
-
-        } else {
-            r = sucessor(variavel_no);
-            variavel_no.setChave(r.getChave());
-        }
-
-        No p;
-        if (r.getEsquerda() != null) {
-            p = r.getEsquerda();
-        } else {
-            p = r.getDireita();
-        }
-
-        if (p != null) {
-            p.setPai(r.getPai());
-        }
-
-        if (r.getPai() == null) {
-            this.raiz = p;
-        } else {
-            if (r == r.getPai().getEsquerda()) {
-                r.getPai().setEsquerda(p);
-            } else {
-                r.getPai().setDireita(p);
-            }
-            verificarBalanceamento(r.getPai());
-        }
-        r = null;
-    }
 ```
+Esse código implementa a funcionalidade de remoção de um nó de uma árvore AVL.
+
+A função delete é responsável por remover o nó da árvore. Ela começa verificando se a raiz é nula (se a árvore está vazia). Se for, a função retorna a raiz (não faz nada).
+
+Em seguida, se a chave do nó a ser removido é menor que a chave da raiz, a função chama ela mesma passando como raiz o filho à esquerda da raiz. Se a chave for maior, a função chama ela mesma passando como raiz o filho à direita. Se a chave da raiz for igual à chave a ser removida, a função remove a raiz.
+
+Se a raiz não tem filhos à esquerda, a função retorna o filho à direita. Se não tem filhos à direita, retorna o filho à esquerda. Se tem filhos tanto à esquerda quanto à direita, a função encontra o nó com a menor chave no filho à direita, troca a chave da raiz com a chave desse nó, e remove esse nó.
+
+A função atualiza a altura da raiz após a remoção, e verifica se a árvore está desbalanceada. Se estiver, a função realiza a rotação adequada (simples ou dupla) para balanceá-la. Por fim, retorna a raiz.
+
+A função get_min_node encontra o nó com a menor chave na subárvore cuja raiz é dada. A função é utilizada para encontrar o nó que vai substituir a raiz removida.
 
 # Árvore Rubro-Negra
 
