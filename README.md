@@ -511,10 +511,15 @@ class RedBlackTree:
     node.color = BLACK
 
 ```
+Esse código implementa a remoção de um nó de uma árvore rubro-negra.
+
+A função "delete" é responsável por remover o nó "z" da árvore. Se o nó "z" não tiver nenhum filho, ele é simplesmente retirado da árvore. Se o nó "z" tiver um filho, ele é substituído pelo seu filho. Se o nó "z" tiver dois filhos, o nó mínimo da subárvore direita é encontrado e substitui o nó "z".
+
+Após a remoção do nó, a função "delete_fixup" é chamada para restaurar as propriedades da árvore rubro-negra, se necessário. A função "delete_fixup" usa um loop para percorrer a árvore a partir do nó pai do nó removido até a raiz. A função verifica se a cor do nó é preta. Se for vermelho, a propriedade da árvore rubro-negra não é violada e o loop é interrompido. Se for preto, são realizadas as rotações e as mudanças de cor necessárias para manter as propriedades da árvore rubro-negra.
 
 ## Busca
 
-```java
+```python
 
 ```
 
