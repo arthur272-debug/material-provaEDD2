@@ -100,6 +100,62 @@ class BST:
 ```
 Nesta função, a busca é realizada começando pela raiz. Se o valor for igual ao valor da raiz, a busca é bem-sucedida. Se for menor, a busca é continuada na subárvore à esquerda. Se for maior, a busca é continuada na subárvore à direita. A busca termina se o nó atual for nulo, o que indica que o valor não foi encontrado na árvore.
 
+## Traversal
+
+### Em ordem
+
+```python
+class BST:
+    # ...
+    def in_order_traversal(self, node):
+        if node:
+            self.in_order_traversal(node.left)
+            print(node.data)
+            self.in_order_traversal(node.right)
+            
+    def in_order(self):
+        self.in_order_traversal(self.root)
+
+```
+
+Nesta função, o percorrimento em ordem é realizado usando a recursão. A função in_order_traversal é chamada para cada nó da árvore, começando pela raiz. Em cada chamada, o percurso é feito primeiro na subárvore à esquerda, em seguida o valor do nó é impresso, e por fim na subárvore à direita.
+
+### Pré-ordem
+
+```python
+class BST:
+    # ...
+    def pre_order_traversal(self, node):
+        if node:
+            print(node.data)
+            self.pre_order_traversal(node.left)
+            self.pre_order_traversal(node.right)
+            
+    def pre_order(self):
+        self.pre_order_traversal(self.root)
+
+```
+
+Nesta função, o percorrimento em pré-ordem é realizado usando a recursão. A função pre_order_traversal é chamada para cada nó da árvore, começando pela raiz. Em cada chamada, o valor do nó é impresso, em seguida o percurso é feito na subárvore à esquerda, e por fim na subárvore à direita.
+
+### Pós-ordem
+
+```python
+class BST:
+    # ...
+    def post_order_traversal(self, node):
+        if node:
+            self.post_order_traversal(node.left)
+            self.post_order_traversal(node.right)
+            print(node.data)
+            
+    def post_order(self):
+        self.post_order_traversal(self.root)
+
+```
+
+Nesta função, o percorrimento em pós-ordem é realizado usando a recursão. A função post_order_traversal é chamada para cada nó da árvore, começando pela raiz. Em cada chamada, o percurso é feito primeiro na subárvore à esquerda, em seguida na subárvore à direita, e por fim o valor do nó é impresso.
+
 # Árvore AVL
 
 ## Balanceamento
