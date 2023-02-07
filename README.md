@@ -348,80 +348,37 @@ O método insert é usado para inserir um novo nó na árvore, e é implementado
 
 Os métodos get_height, get_balance e left_rotate e right_rotate são usados para ajudar na manutenção do balanceamento da árvore. O método get_height retorna a altura de um nó, ou zero se ele for nulo. O método get_balance retorna o fator de balanceamento de um nó, calculado como a diferença entre a altura dos filhos à esquerda e à direita. Os métodos left_rotate e right_rotate são usados para rotacionar a árvore à esquerda ou à direita, respectivamente, para mantê-la balanceada.
 
-## Indução com Rotação Simples e Dupla
+## Indução com Rotação Simples
 
-```java
-   public No FazerRotacaoEsquerda(No variavel_no) {
+### Rotação Simples à Esquerda
 
-        No direita = variavel_no.getDireita();
-        direita.setPai(variavel_no.getPai());
-
-        variavel_no.setDireita(direita.getEsquerda());
-
-        if (variavel_no.getDireita() != null) {
-            variavel_no.getDireita().setPai(variavel_no);
-        }
-
-        direita.setEsquerda(variavel_no);
-        variavel_no.setPai(direita);
-
-        if (direita.getPai() != null) {
-
-            if (direita.getPai().getDireita() == variavel_no) {
-                direita.getPai().setDireita(direita);
-
-            } else if (direita.getPai().getEsquerda() == variavel_no) {
-                direita.getPai().setEsquerda(direita);
-            }
-        }
-
-        setBalanceamento(variavel_no);
-        setBalanceamento(direita);
-
-        return direita;
-    }
-
-    public No rotacaoDireita(No variavel_no) {
-
-        No esquerda = variavel_no.getEsquerda();
-        esquerda.setPai(variavel_no.getPai());
-
-        variavel_no.setEsquerda(esquerda.getDireita());
-
-        if (variavel_no.getEsquerda() != null) {
-            variavel_no.getEsquerda().setPai(variavel_no);
-        }
-
-        esquerda.setDireita(variavel_no);
-        variavel_no.setPai(esquerda);
-
-        if (esquerda.getPai() != null) {
-
-            if (esquerda.getPai().getDireita() == variavel_no) {
-                esquerda.getPai().setDireita(esquerda);
-
-            } else if (esquerda.getPai().getEsquerda() == variavel_no) {
-                esquerda.getPai().setEsquerda(esquerda);
-            }
-        }
-
-        setBalanceamento(variavel_no);
-        setBalanceamento(esquerda);
-
-        return esquerda;
-    }
-
-    public No duplaRotacaoEsquerdaDireita(No variavel_no) {
-        variavel_no.setEsquerda(FazerRotacaoEsquerda(variavel_no.getEsquerda()));
-        return rotacaoDireita(variavel_no);
-    }
-
-    public No duplaRotacaoDireitaEsquerda(No variavel_no) {
-        variavel_no.setDireita(rotacaoDireita(variavel_no.getDireita()));
-        return FazerRotacaoEsquerda(variavel_no);
-    }
+```python
+   def left_rotate(self, node):
+    y = node.right
+    node.right = y.left
+    y.left = node
+    node.height = 1 + max(self.get_height(node.left), self.get_height(node.right))
+    y.height = 1 + max(self.get_height(y.left), self.get_height(y.right))
+    return y
 
 ```
+Em uma rotação simples à esquerda, o nó desequilibrado é colocado como filho direito de seu filho esquerdo.
+
+### Rotação Simples à Direita
+
+```python
+   def right_rotate(self, node):
+    y = node.left
+    node.left = y.right
+    y.right = node
+    node.height = 1 + max(self.get_height(node.left), self.get_height(node.right))
+    y.height = 1 + max(self.get_height(y.left), self.get_height(y.right))
+    return y
+
+```
+Em uma rotação simples à direita, o nó desequilibrado é colocado como filho esquerdo de seu filho direito.
+
+
 
 ## Remoção
 
