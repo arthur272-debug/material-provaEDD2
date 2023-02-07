@@ -31,49 +31,55 @@ class BST:
                         break
                     else:
                         current = current.right
+                        
 ```
 
 Neste código, a função insert adiciona um novo nó à árvore. Se a raiz da árvore estiver vazia, o novo nó será definido como raiz. Se não, o novo nó será adicionado a esquerda ou à direita da raiz, dependendo se o seu valor for menor ou maior que o valor da raiz.
 
 ## Remoção
 
-```java
-public void delete(Integer chave) {
-        raiz = delete(raiz, chave);
-    }
+```python
+class BST:
+    # ...
+    def remove(self, data):
+        parent = None
+        current = self.root
+        while current and current.data != data:
+            parent = current
+            if data < current.data:
+                current = current.left
+            else:
+                current = current.right
+        if not current:
+            return
+        if not current.right:
+            if not parent:
+                self.root = current.left
+            else:
+                if current.data < parent.data:
+                    parent.left = current.left
+                else:
+                    parent.right = current.right
+        else:
+            successor = current.right
+            while successor.left:
+                successor = successor.left
+            if not parent:
+                self.root = successor
+            else:
+                if current.data < parent.data:
+                    parent.left = successor
+                else:
+                    parent.right = successor
+            successor.left = current.left
 
-    private No delete(No variavel_no, Integer chave) {
-        if (variavel_no == null)
-            return null;
-
-        int comparacao = chave.compareTo(variavel_no.chave);
-
-        if (comparacao < 0)
-            variavel_no.esquerda = delete(variavel_no.esquerda, chave);
-        else if (comparacao > 0)
-            variavel_no.direita = delete(variavel_no.direita, chave);
-        else {
-            if (variavel_no.direita == null)
-                return variavel_no.esquerda;
-            if (variavel_no.esquerda == null)
-                return variavel_no.direita;
-
-            No x = variavel_no;
-
-            /* Pega o menor da subárvore direita (mais à esquerda). */
-            variavel_no = mostrarMinimo(x.direita);
-
-            /* Remove o menor. */
-            variavel_no.direita = deletarMinimo(x.direita);
-
-            /* A subárvore esquerda se mantém a mesma. */
-            variavel_no.esquerda = x.esquerda;
-        }
-
-        return variavel_no;
-    }
 
 ```
+Nesta função, a remoção é realizada começando pela raiz. Primeiro, o nó a ser removido é localizado usando a busca. Em seguida, há três casos possíveis para remover o nó:
+
+1. Se o nó não tiver filho à direita, ele pode ser substituído pelo seu filho à esquerda (se houver).
+2. Se o nó tiver um filho à direita, o sucessor do nó (o nó mais à esquerda na subárvore à direita) é encontrado e usado para substituir o nó removido.
+3. Se o nó tiver dois filhos, o sucessor do nó é encontrado e usado para substituir o nó removido, e o sucessor original é removido.
 
 # Árvore AVL
 
