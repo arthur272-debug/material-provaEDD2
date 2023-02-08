@@ -784,8 +784,27 @@ A função "_merge_or_redistribute" é responsável por garantir que o nó tenha
 ## Busca
 
 ```python
+def search(self, node, key):
+    """Search for a key in the tree."""
+    if not node:
+        return None
+
+    # Check if key is present in node
+    i = 0
+    while i < len(node.keys) and node.keys[i] < key:
+        i += 1
+    
+    if i < len(node.keys) and node.keys[i] == key:
+        return node, i
+    
+    # Key is not present in current node, move to the appropriate child
+    if node.is_leaf:
+        return None
+    else:
+        return self.search(node.children[i], key)
 
 ```
+Neste código, a função search aceita dois argumentos: o nó atual (node) e a chave que desejamos buscar (key). Se a chave estiver presente no nó atual, a função retorna o nó e o índice da chave. Se a chave não estiver presente no nó atual e o nó for uma folha, a função retorna None. Se a chave não estiver presente no nó atual e o nó não for uma folha, a busca continua no filho apropriado.
 
 ## Balanceamento
 
