@@ -642,19 +642,154 @@ Assim, este código é para buscar um nó com chave "k" na árvore rubro negra. 
 
 # Árvore B
 
+A árvore B é uma estrutura de dados de busca que mantém seus nós com no mínimo t-1 chaves (e no máximo 2t-1) para algum valor t, que é chamado de grau. A árvore é usada para garantir que as operações de inserção, busca e remoção sejam executadas em tempo logarítmico.
+
 ## Inserção
 
-```java
+```python
+
+class BTreeNode:
+    def __init__(self, t, leaf=True):
+        self.t = t
+        self.leaf = leaf
+        self.keys = []
+        self.children = []
+
+
+class BTree:
+    def __init__(self, t):
+        self.root = BTreeNode(t)
+
+    def split_child(self, x, i):
+        z = BTreeNode(x.t, leaf=x.children[i].leaf)
+        y = x.children[i]
+        z.keys = y.keys[x.t:]
+        if not y.leaf:
+            z.children = y.children[x.t:]
+        x.children[i] = z
+        x.keys = x.keys[:i] + [y.keys[x.t - 1]] + x.keys[i + 1:]
+
+    def insert_non_full(self, x, k):
+        i = len(x.keys) - 1
+        if x.leaf:
+            x.keys.append(0)
+            while i >= 0 and k < x.keys[i]:
+                x.keys[i + 1] = x.keys[i]
+                i -= 1
+            x.keys[i + 1] = k
+        else:
+            while i >= 0 and k < x.keys[i]:
+                i -= 1
+            i += 1
+            if len(x.children[i].keys) == 2 * x.t - 1:
+                self.split_child(x, i)
+                if k > x.keys[i]:
+                    i += 1
+            self.insert_non_full(x.children[i], k)
+
+    def insert(self, k):
+        r = self.root
+        if len(r.keys) == 2 * r.t - 1:
+            s = BTreeNode(r.t, leaf=False)
+            self.root = s
+            s.children.append(r)
+            self.split_child(s, 0)
+            self.insert_non_full(s, k)
+        else:
+            self.insert_non_full(r, k)
 
 ```
 
-## Deleção
+Nesta implementação, a função insert insere um novo nó na árvore b-trees. Primeiro, verifica-se se a raiz está cheia. Se estiver, a raiz é dividida e uma nova raiz é criada. Em seguida, a função insert_non_full é chamada para inserir o nó na subárvore apropriada. Se o nó atual não estiver cheio, o nó é adicionado diretamente. Caso contrário, o nó é dividido em dois nós e o processo é repetido na subárvore apropriada.
 
-```java
+## Remoção
+
+```python
+
+class BTree:
+    def __init__(self, t):
+        self.t = t
+        self.root = None
+    
+    def remove(self, node, key):
+    if not node:
+        return node, False
+    
+    # Check if key is present in node
+    i = 0
+    while i < len(node.keys) and node.keys[i] < key:
+        i += 1
+    
+    if i < len(node.keys) and node.keys[i] == key:
+        # Key is present in current node
+        # If the node is a leaf node, just remove the key
+        if node.is_leaf:
+            node.keys.pop(i)
+            node.n -= 1
+            return node, True
+        
+        # If the node is not a leaf node, replace key with predecessor
+        predecessor = self._get_predecessor(node, i)
+        node.keys[i] = predecessor
+        node, removed = self.remove(node.children[i], predecessor)
+        if removed:
+            self._merge_or_redistribute(node, i)
+        return node, True
+    
+    # Key is not present in current node, move to the appropriate child
+    if node.is_leaf:
+        return node, False
+    else:
+        node.children[i], removed = self.remove(node.children[i], key)
+        if removed:
+            self._merge_or_redistribute(node, i)
+        return node, removed
+
+def _get_predecessor(self, node, i):
+    """Get the predecessor of the key at index i in the node."""
+    current = node.children[i]
+    while not current.is_leaf:
+        current = current.children[-1]
+    return current.keys[-1]
+
+def _merge_or_redistribute(self, node, i):
+    """Merge the i-th child with its sibling if it has less than t-1 keys,
+    or redistribute keys between the i-th child and its sibling if it has
+    t-1 keys.
+    """
+    child = node.children[i]
+    if len(child.keys) < self.t:
+        # Merge the child with its sibling
+        if i > 0 and len(node.children[i-1].keys) >= self.t:
+            # Get keys from left sibling
+            child.keys.insert(0, node.keys[i-1])
+            node.keys[i-1] = node.children[i-1].keys.pop(-1)
+            child.children.insert(0, node.children[i-1].children.pop(-1))
+            node.children.pop(i-1)
+            node.keys.pop(i-1)
+        elif i < len(node.keys) and len(node.children[i+1].keys) >= self.t:
+            # Get keys from right sibling
+            child.keys.append(node.keys[i])
+            node.keys[i] = node.children[i+1].keys.pop(0)
+            child.children.append(node.children[i+1].children.pop(0))
+            node.children.pop(i+1)
 
 ```
+A função "remove" é responsável por remover uma chave específica da árvore B. Ela começa verificando se o nó fornecido é nulo. Se for, a função retorna o nó e False, indicando que a chave não foi encontrada na árvore. Em seguida, a função verifica se a chave está presente no nó atual usando um loop while. Se a chave estiver presente, ela é removida do nó, se o nó for folha. Se o nó não for folha, a chave é substituída pelo seu predecessor (a chave mais a esquerda do nó filho direito) e a remoção é continuada a partir do nó filho. Se a chave não estiver presente no nó atual, a função continua a busca recursivamente em um dos seus filhos. Depois da remoção, a função "merge_or_redistribute" é chamada para garantir que o nó mantenha no mínimo t-1 chaves. Se o nó filho tiver menos que t-1 chaves, ele é mesclado com seu irmão. Se ele tiver t-1 chaves, as chaves são redistribuídas entre ele e seu irmão.
+
+A função "_get_predecessor" é usada para obter o predecessor de uma chave em um nó. Ela começa no nó filho fornecido e percorre recursivamente sua subárvore até encontrar a folha mais a esquerda. A chave mais a direita da folha é o predecessor da chave.
+
+A função "_merge_or_redistribute" é responsável por garantir que o nó tenha pelo menos t-1 chaves depois de uma remoção. Se o nó filho tiver menos que t-1 chaves, ele é mesclado com seu irmão. Se ele tiver t-1 chaves, as chaves são redistribuídas entre ele e seu irmão.
+
 ## Busca
 
-```java
+```python
 
 ```
+
+## Balanceamento
+
+```python
+
+```
+
