@@ -808,7 +808,5 @@ Neste código, a função search aceita dois argumentos: o nó atual (node) e a 
 
 ## Balanceamento
 
-```python
-
-```
+A árvore B mantém seu equilíbrio, garantindo que cada nó tenha no mínimo t-1 e no máximo 2t-1 chaves, onde t é o número mínimo de filhos de um nó não-folha. Isto é conseguido através da redistribuição de chaves entre os nós irmãos ou mesclando nós com menos de t-1 chaves com seus irmãos. Quando um nó é removido ou adicionado, se o número de chaves em um nó cair abaixo de t-1, as operações de redistribuição ou mesclagem são realizadas para manter o equilíbrio da árvore. Esta garantia de equilíbrio permite que a árvore B mantenha suas propriedades de altura logarítmica e alta eficiência em operações de inserção, remoção e busca.
 
